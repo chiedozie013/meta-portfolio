@@ -1,44 +1,69 @@
-import { Box, HStack } from "@chakra-ui/react";
+import React, { useEffect, useRef } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import {
   faGithub,
   faLinkedin,
   faMedium,
-  faStackOverflow
+  faStackOverflow,
 } from "@fortawesome/free-brands-svg-icons";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
-import useScrollDirection from "../hooks/useScrollDirection";
+import { Box, HStack } from "@chakra-ui/react";
 
 const socials = [
   {
-    name: "Send Email",
     icon: faEnvelope,
     url: "mailto: hello@example.com",
   },
   {
-    name: "GitHub",
     icon: faGithub,
-    url: "https://github.com",
+    url: "https://www.github.com/chiedozie013",
   },
   {
-    name: "LinkedIn",
     icon: faLinkedin,
-    url: "https://www.linkedin.com",
+    url: "https://www.linkedin.com/in/chiedozie013/",
   },
   {
-    name: "Medium",
     icon: faMedium,
-    url: "https://medium.com",
+    url: "https://medium.com/",
   },
   {
-    name: "StackOverflow",
     icon: faStackOverflow,
-    url: "https://stackoverflow.com",
+    url: "https://stackoverflow.com/",
   },
 ];
 
+/**
+ * This component illustrates the use of both the useRef hook and useEffect hook.
+ * The useRef hook is used to create a reference to a DOM element, in order to tweak the header styles and run a transition animation.
+ * The useEffect hook is used to perform a subscription when the component is mounted and to unsubscribe when the component is unmounted.
+ * Additionally, it showcases a neat implementation to smoothly navigate to different sections of the page when clicking on the header elements.
+ */
 const Header = () => {
+  const headerRef = useRef(null);
+
+  useEffect(() => {
+    let prevScrollPos = window.scrollY;
+
+    const handleScroll = () => {
+      const currentScrollPos = window.scrollY;
+      const headerElement = headerRef.current;
+      if (!headerElement) {
+        return;
+      }
+      if (prevScrollPos > currentScrollPos) {
+        headerElement.style.transform = "translateY(0)";
+      } else {
+        headerElement.style.transform = "translateY(-200px)";
+      }
+      prevScrollPos = currentScrollPos;
+    };
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   const handleClick = (anchor) => () => {
     const id = `${anchor}-section`;
     const element = document.getElementById(id);
@@ -49,9 +74,6 @@ const Header = () => {
       });
     }
   };
-
-  const { dir } = useScrollDirection();
-
   return (
     <Box
       position="fixed"
@@ -59,11 +81,11 @@ const Header = () => {
       left={0}
       right={0}
       translateY={0}
-      transform={dir === "up" ? "translateY(0px)" : "translateY(-200px)"}
       transitionProperty="transform"
       transitionDuration=".3s"
       transitionTimingFunction="ease-in-out"
       backgroundColor="#18181b"
+      ref={headerRef}
     >
       <Box color="white" maxWidth="1280px" margin="0 auto">
         <HStack
@@ -73,29 +95,25 @@ const Header = () => {
           alignItems="center"
         >
           <nav>
-            {/* Add social media links based on the `socials` data */}
-            {socials.map((val) => {
-              return (
+            <HStack spacing={8}>
+              {socials.map(({ icon, url }) => (
                 <a
-                  href={val.url}
-                  key={val.url}
+                  key={url}
+                  href={url}
                   target="_blank"
-                  style={{ margin: "0 20px 0 0" }}
-                  rel="noreferrer"
-                  title={val.name}
+                  rel="noopener noreferrer"
                 >
-                  <FontAwesomeIcon icon={val.icon} size="2x" />
+                  <FontAwesomeIcon icon={icon} size="2x" key={url} />
                 </a>
-              );
-            })}
+              ))}
+            </HStack>
           </nav>
           <nav>
             <HStack spacing={8}>
-              {/* Add links to Projects and Contact me section */}
-              <a href="/#projects" onClick={handleClick("projects")}>
+              <a href="#projects" onClick={handleClick("projects")}>
                 Projects
               </a>
-              <a href="/#contact-me" onClick={handleClick("contactme")}>
+              <a href="#contactme" onClick={handleClick("contactme")}>
                 Contact Me
               </a>
             </HStack>
@@ -105,4 +123,5 @@ const Header = () => {
     </Box>
   );
 };
+
 export default Header;
