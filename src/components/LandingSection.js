@@ -15,7 +15,7 @@ const LandingSection = () => (
     isDarkBackground
     backgroundColor="#2A4365"
   >
-    <Avatar src="" name={greeting} size="2xl" />
+    <Avatar src="./image/my-photo.jpeg" name={greeting} size="2xl" />
     <Heading as="h1" size="1x" paddingBottom={18}>
       {greeting}
     </Heading>
