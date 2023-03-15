@@ -8,7 +8,7 @@ import {
   Input,
   Select,
   Textarea,
-  VStack
+  VStack,
 } from "@chakra-ui/react";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

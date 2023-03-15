@@ -4,7 +4,7 @@ import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import {
   faGithub,
   faLinkedin,
-  faMedium,
+  faTwitter,
   faStackOverflow,
 } from "@fortawesome/free-brands-svg-icons";
 import { Box, HStack } from "@chakra-ui/react";
@@ -23,8 +23,8 @@ const socials = [
     url: "https://www.linkedin.com/in/chiedozie013/",
   },
   {
-    icon: faMedium,
-    url: "https://medium.com/",
+    icon: faTwitter,
+    url: "https://twitter.com/edoziey",
   },
   {
     icon: faStackOverflow,

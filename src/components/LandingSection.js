@@ -3,7 +3,7 @@ import React from "react";
 import FullScreenSection from "./FullScreenSection";
 
 const greeting = "Hello, I am James Chiedozie James!";
-const bio1 = "A frontend developer and Product Designer";
+const bio1 = "A Frontend Developer and Product Designer";
 const bio2 = "specialised in React";
 
 // Implement the UI for the LandingSection component according to the instructions.
